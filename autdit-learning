@@ -1,0 +1,53 @@
+# File: audit_log_system.py
+
+import datetime
+import os
+
+class AuditLog:
+    """
+    Simple Audit Log system to track and record operations for compliance and accountability.
+    """
+
+    def __init__(self, log_file="audit_log.txt"):
+        self.log_file = log_file
+        self.initialize_log()
+
+    def initialize_log(self):
+        """Initializes the audit log file if not present."""
+        if not os.path.exists(self.log_file):
+            with open(self.log_file, "w") as log:
+                log.write("Audit Log Initialized\n")
+                log.write(f"Start Date: {datetime.datetime.now()}\n")
+                log.write("=" * 40 + "\n")
+        else:
+            self.log_message("Audit Log Accessed")
+
+    def log_message(self, message):
+        """Logs a message with a timestamp."""
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open(self.log_file, "a") as log:
+            log.write(f"[{timestamp}] {message}\n")
+
+    def critical_operation(self, operation_name, performed_by):
+        """Records a critical operation in the log."""
+        self.log_message(f"CRITICAL OPERATION: {operation_name} performed by {performed_by}")
+
+    def view_log(self):
+        """Reads and displays the log content."""
+        if os.path.exists(self.log_file):
+            with open(self.log_file, "r") as log:
+                return log.read()
+        return "No log file found."
+
+
+# Example Usage
+if __name__ == "__main__":
+    auditor = AuditLog()
+
+    # Simulating operations
+    auditor.log_message("User login detected")
+    auditor.critical_operation("Approved Financial Report Q4 2023", performed_by="CEO")
+    auditor.log_message("System backup initiated")
+    
+    # Displaying the log
+    print(auditor.view_log())
