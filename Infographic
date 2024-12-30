@@ -1,0 +1,61 @@
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+def create_infographic():
+    # Initialize the figure
+    fig, ax = plt.subplots(figsize=(10, 14))
+    ax.axis('off')  # Turn off the axis
+
+    # Header Section
+    ax.text(0.5, 0.95, "Sarbanes–Oxley Act of 2002", fontsize=24, weight='bold', ha='center')
+    ax.text(0.5, 0.92, "Strengthening accountability, restoring trust after corporate scandals",
+            fontsize=14, ha='center', color='gray')
+
+    # Key Sections
+    sections = [
+        ("Section 302 – Executive Accountability",
+         "CEOs and CFOs must personally certify financial statements.",
+         "👨‍💼 Signing document icon"),
+        ("Section 404 – Internal Controls",
+         "Companies must document, assess, and improve internal controls over financial reporting.",
+         "🛡️ Shield icon"),
+        ("Section 409 – Real-Time Disclosures",
+         "Companies must disclose material changes promptly.",
+         "⏰ Clock/calendar icon"),
+        ("Section 802 – Record Retention",
+         "Tampering with financial records leads to severe penalties.",
+         "📂 Locked folder icon"),
+    ]
+
+    y_pos = 0.8
+    for section in sections:
+        title, text, visual = section
+        ax.text(0.1, y_pos, title, fontsize=16, weight='bold', va='top')
+        ax.text(0.1, y_pos - 0.03, text, fontsize=12, va='top', wrap=True)
+        ax.text(0.9, y_pos, visual, fontsize=20, ha='center', va='top', color='gray')  # Placeholder for icons
+        y_pos -= 0.12  # Adjust spacing for next section
+
+    # Impact Section
+    ax.add_patch(FancyBboxPatch((0.05, y_pos - 0.12), 0.9, 0.15,
+                                 boxstyle="round,pad=0.3", edgecolor="black", facecolor="#f0f0f0"))
+    ax.text(0.1, y_pos, "Why Does SOX Matter?", fontsize=16, weight='bold', va='top')
+    impact_points = [
+        "📈 Restores public trust in financial reporting",
+        "📜 Elevates corporate governance standards",
+        "⚖️ Enforces ethical accountability for leaders"
+    ]
+    for i, point in enumerate(impact_points):
+        ax.text(0.1, y_pos - 0.03 * (i + 1), point, fontsize=12, va='top')
+
+    # Footer Section
+    y_pos -= 0.18
+    ax.text(0.5, y_pos - 0.05, "How has the Sarbanes–Oxley Act influenced your industry or career? "
+            "Share your story below!", fontsize=12, ha='center', wrap=True)
+    ax.text(0.5, y_pos - 0.09, "S O X", fontsize=30, weight='bold', color='#333', ha='center', va='top')
+
+    # Display the infographic
+    plt.tight_layout()
+    plt.show()
+
+# Run the infographic function
+create_infographic()
